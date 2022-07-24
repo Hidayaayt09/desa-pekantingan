@@ -4,9 +4,11 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataVaksinController;
 use App\Http\Controllers\FormulirController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PendudukController;
+use App\Http\Controllers\VaksinController;
 use App\Models\Penduduk;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +34,8 @@ Route::middleware(['guest'])->group(function () {
     Route::get('auth/login', [LoginController::class, 'login']);
     Route::post('auth/login', [LoginController::class, 'proses']);
 });
+
+Route::get('vaksin', DataVaksinController::class);
 
 Route::get('berita', [BeritaController::class, 'showAll']);
 Route::get('berita/{slug}', [BeritaController::class, 'show']);
@@ -85,6 +89,8 @@ Route::middleware(['autentikasi'])->group(function () {
         Route::delete('surat/{tipe}/{id}', [FormulirController::class, 'destroy']);
 
         Route::resource('berita', BeritaController::class);
+
+        Route::resource('vaksin', VaksinController::class);
 
         Route::post('kependudukan/upload', [PendudukController::class, 'import']);
         Route::get('kependudukan/download', [PendudukController::class, 'export']);

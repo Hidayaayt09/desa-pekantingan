@@ -71,6 +71,12 @@
                     </li>
 
                     <li class="">
+                        <a href="{{ url('admin/vaksin') }}">
+                            <i class="fa fa-eyedropper"></i> Data Vaksin
+                        </a>
+                    </li>
+
+                    <li class="">
                         <a href="{{ url('admin/akun') }}">
                             <i class="fa fa-user"></i>Akun
                         </a>

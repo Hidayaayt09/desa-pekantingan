@@ -32,6 +32,9 @@
             <a href="{{ url('berita') }}" class="nav-link">Berita</a>
         </li>
         <li class="nav-item">
+            <a href="{{ url('vaksin') }}" class="nav-link">Data Vaksin</a>
+        </li>
+        <li class="nav-item">
             <a href="https://api.whatsapp.com/send?phone=6289660931433&text=Silahkan Isi Disini, jangan lupa sertakan nama Anda dan sertakan Foto KTP."
                 class="nav-link">Hubungi Kami</a>
         </li>
