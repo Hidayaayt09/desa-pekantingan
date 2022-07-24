@@ -15,7 +15,7 @@ composer install
 ```
 - **Copy file .env.example ke .env**
 ```
-cp .env.example .env
+cp .env.example .env // copy paste file .env.example ke .env
 ```
 - **Edit file .env**
 ```
