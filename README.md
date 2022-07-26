@@ -34,6 +34,10 @@ FILESYSTEM_DISK=public
 ```
 php artisan migrate:fresh --seed
 ```
+- **Generate Key**
+```
+php artisan key:generate
+```
 - **Jalankan serve laravel**
 ```
 php artisan serve
