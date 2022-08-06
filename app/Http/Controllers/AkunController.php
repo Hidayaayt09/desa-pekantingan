@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Penduduk;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class AkunController extends Controller
 {
@@ -71,5 +74,47 @@ class AkunController extends Controller
         User::where('id', $id)->delete();
 
         return redirect('admin/akun')->with('message', '<div class="alert alert-success">Delete berhasil!</div>');
+    }
+
+    public function show()
+    {
+        if (Session::get('penduduk')) {
+            $data = [
+                'title' => "Profil",
+                'penduduk' => Penduduk::where('id', Session::get('penduduk')->id)->first()
+            ];
+            return view('akun.show', $data);
+        } else {
+            return redirect('auth');
+        }
+    }
+
+    public function proccess(Request $request)
+    {
+        $id = Session::get('penduduk')->id;
+
+        $validate = $request->validate([
+            'nama' => 'required',
+            'nik' => 'required',
+            'jk' => 'required',
+            'kewarganegaraan' => 'required',
+            'agama' => 'required',
+            'tempat_lahir' => 'required',
+            'tgl_lahir' => 'required',
+            'pekerjaan' => 'required',
+            'alamat' => 'required',
+            'image' => 'image|mimes:png,jpg,jpeg,gif'
+        ]);
+
+        $penduduk = Penduduk::where('id', $id)->first();
+
+        if ($request->file('image')) {
+            // Storage::delete($penduduk->image);
+            $validate['image'] = $request->file('image')->store('penduduk');
+        }
+
+        Penduduk::where('id', $id)->update($validate);
+
+        return back()->with('message', '<div class="alert alert-success">Update berhasil!</div>');
     }
 }

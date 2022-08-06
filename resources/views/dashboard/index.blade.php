@@ -4,8 +4,9 @@
     <div class="row top_tiles">
         <div class="col-sm-12">
             <div class="alert bg-success text-white mb-3">
-                <p style="font-size: 20px; margin-bottom: 0">Selamat Datang <b>{{ auth()->user()->name }}</b></p>
+                <p style="font-size: 20px; margin-bottom: 0">Selamat Datang <b>{{ Session::get('penduduk') ? Session::get('penduduk')->nama : auth()->user()->name }}</b></p>
             </div>
+            @if (!Session::get('penduduk'))
             <div class="animated flipInY col-md-6">
                 <div class="tile-stats">
                     <div class="icon">
@@ -26,6 +27,7 @@
                     <h3>Jumlah Permintaan Surat</h3>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 @endsection

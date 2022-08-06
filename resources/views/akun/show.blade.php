@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('app_title', 'Edit Penduduk')
+@section('app_title', $title ? $title : 'Edit Penduduk')
 
 @section('app_contents')
     <section class="section">
@@ -9,8 +9,7 @@
         </h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ url('admin/penduduk/tetap') }}">Daftar Penduduk</a></li>
+                <li class="breadcrumb-item"><a href="{{ $title ? url('penduduk') : url('admin/dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@yield('app_title')</li>
             </ol>
         </nav>
@@ -52,7 +51,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form action="{{ url('admin/penduduk/tetap/' . $penduduk->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ url('penduduk/profil') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('put')
                         <div class="form-group row">

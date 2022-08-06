@@ -2,15 +2,19 @@
 
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\Auth\LoginController as AuthLoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataVaksinController;
 use App\Http\Controllers\FormulirController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PendudukController;
+use App\Http\Controllers\SuratController;
 use App\Http\Controllers\VaksinController;
 use App\Models\Penduduk;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +34,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [AppController::class, 'index']);
 
 Route::middleware(['guest'])->group(function () {
-    Route::get('auth', [LoginController::class, 'login']);
-    Route::get('auth/login', [LoginController::class, 'login']);
-    Route::post('auth/login', [LoginController::class, 'proses']);
+    Route::get('auth', [AuthLoginController::class, 'index']);
+    Route::post('auth', [AuthLoginController::class, 'proccess']);
+    Route::get('auth/register', [RegisterController::class, 'index']);
+    Route::post('auth/register', [RegisterController::class, 'proccess']);
+    Route::get('siteman/login', [LoginController::class, 'login']);
+    Route::post('siteman/login', [LoginController::class, 'proses']);
 });
 
 Route::get('vaksin', DataVaksinController::class);
@@ -72,6 +79,18 @@ Route::prefix('tentang')->group(function () {
     });
 });
 
+Route::prefix('penduduk')->group(function () {
+    Route::get('logout', [AuthLoginController::class, 'logout']);
+    Route::get('/', [DashboardController::class, 'index']);
+
+    Route::get('/profil', [AkunController::class, 'show']);
+    Route::put('/profil', [AkunController::class, 'proccess']);
+
+    Route::get('formulir', [SuratController::class, 'index']);
+    Route::get('formulir/{tipe}', [SuratController::class, 'show']);
+    Route::post('formulir', [SuratController::class, 'store']);
+});
+
 Route::middleware(['autentikasi'])->group(function () {
     Route::prefix('api/v1/')->group(function () {
         Route::get('image/{id}', [FormulirController::class, 'showImage']);
@@ -92,8 +111,11 @@ Route::middleware(['autentikasi'])->group(function () {
 
         Route::resource('vaksin', VaksinController::class);
 
-        Route::post('kependudukan/upload', [PendudukController::class, 'import']);
-        Route::get('kependudukan/download', [PendudukController::class, 'export']);
-        Route::resource('kependudukan', PendudukController::class);
+        Route::post('penduduk/tetap/upload', [PendudukController::class, 'import']);
+        Route::get('penduduk/tetap/download', [PendudukController::class, 'export']);
+        Route::get('penduduk/baru', [PendudukController::class, 'view']);
+        Route::put('penduduk/baru/{id}', [PendudukController::class, 'validasi']);
+        Route::get('penduduk/tetap/{id}', [PendudukController::class, 'edit']);
+        Route::resource('penduduk/tetap', PendudukController::class);
     });
 });

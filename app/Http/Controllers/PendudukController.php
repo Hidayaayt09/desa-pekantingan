@@ -6,6 +6,7 @@ use App\Exports\PendudukExport;
 use App\Imports\PendudukImport;
 use App\Models\Penduduk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PendudukController extends Controller
@@ -18,7 +19,16 @@ class PendudukController extends Controller
     public function index()
     {
         $data = [
-            'penduduk' => Penduduk::all()
+            'penduduk' => Penduduk::where('status', 1)->get(),
+        ];
+
+        return view('penduduk.index', $data);
+    }
+
+    public function view()
+    {
+        $data = [
+            'penduduk' => Penduduk::where('status', 0)->orWhere('status', null)->get()
         ];
 
         return view('penduduk.index', $data);
@@ -52,6 +62,7 @@ class PendudukController extends Controller
             'tgl_lahir' => 'required',
             'pekerjaan' => 'required',
             'alamat' => 'required',
+            'image' => 'image|required|mimes:png,jpg,jpeg,gif'
         ]);
 
         $penduduk = Penduduk::where('nik', $request->nik)->first();
@@ -60,9 +71,15 @@ class PendudukController extends Controller
             return back()->with('message', '<div class="alert alert-danger">Penduduk telah terdaftar!</div>');
         } else {
             $validate['kewarganegaraan'] = $validate['wn'];
+            $validate['status'] = 1;
+
+            if ($request->file('image')) {
+                $validate['image'] = $request->file('image')->store('penduduk');
+            }
+
             Penduduk::create($validate);
 
-            return redirect('admin/kependudukan')->with('message', '<div class="alert alert-success">Tambah berhasil!</div>');
+            return redirect('admin/penduduk/tetap')->with('message', '<div class="alert alert-success">Tambah berhasil!</div>');
         }
     }
 
@@ -111,11 +128,19 @@ class PendudukController extends Controller
             'tgl_lahir' => 'required',
             'pekerjaan' => 'required',
             'alamat' => 'required',
+            'image' => 'image|mimes:png,jpg,jpeg,gif'
         ]);
+
+        $penduduk = Penduduk::where('id', $id)->first();
+
+        if ($request->file('image')) {
+            Storage::delete($penduduk->image);
+            $validate['image'] = $request->file('image')->store('penduduk');
+        }
 
         Penduduk::where('id', $id)->update($validate);
 
-        return redirect('admin/kependudukan')->with('message', '<div class="alert alert-success">Update berhasil!</div>');
+        return redirect('admin/penduduk/tetap')->with('message', '<div class="alert alert-success">Update berhasil!</div>');
     }
 
     /**
@@ -126,9 +151,11 @@ class PendudukController extends Controller
      */
     public function destroy($id)
     {
-        Penduduk::findOrFail($id)->delete();
+        $penduduk = Penduduk::where('id', $id)->first();
+        Storage::delete($penduduk->image);
+        $penduduk->delete();
 
-        return redirect('admin/kependudukan')->with('message', '<div class="alert alert-success">Delete berhasil!</div>');
+        return redirect('admin/penduduk/tetap')->with('message', '<div class="alert alert-success">Delete berhasil!</div>');
     }
 
     /**
@@ -157,5 +184,15 @@ class PendudukController extends Controller
     public function export()
     {
         return Excel::download(new PendudukExport, date('Y_m_d') . '_' . time() . '_REKAP_DATA_PENDUDUK_DESA_KRIMUN.xlsx');
+    }
+
+    public function validasi($id)
+    {
+        $penduduk = Penduduk::where('id', $id)->first();
+
+        $penduduk->status = 1;
+        $penduduk->save();
+
+        return redirect('admin/penduduk/baru')->with('message', '<div class="alert alert-success">Update berhasil!</div>');
     }
 }

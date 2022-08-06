@@ -30,7 +30,7 @@
     <div class="login-area">
         <div class="container">
             <div class="login-box ptb--100">
-                <form action="{{ url('auth/login') }}" method="post">
+                <form action="{{ url('siteman/login') }}" method="post">
 
                     @csrf
                     <div class="login-form-head" style="background-color: green">

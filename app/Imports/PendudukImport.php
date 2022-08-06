@@ -27,6 +27,7 @@ class PendudukImport implements ToCollection, WithHeadingRow
                 'tgl_lahir' => date('Y-m-d', strtotime($tgl_lahir)),
                 'pekerjaan' => $collect['pekerjaan'],
                 'alamat' => $collect['alamat'],
+                'status' => 1
             ]);
         }
     }

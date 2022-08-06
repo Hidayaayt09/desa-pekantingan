@@ -20,9 +20,6 @@
             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                 class="nav-link dropdown-toggle">Pengisian Surat</a>
             <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                <li><a href="{{ url('formulir/sku') }}" class="dropdown-item">Surat Keterangan Usaha </a></li>
-                <li><a href="{{ url('formulir/sktm') }}" class="dropdown-item">Surat Keterangan Tidak Mampu </a>
-                </li>
                 <li><a href="{{ url('formulir/skd') }}" class="dropdown-item">Surat Keterangan Domisili </a></li>
 
                 <li class="dropdown-divider"></li>

@@ -12,6 +12,7 @@
             <th>Pekerjaan</th>
             <th>Alamat</th>
             <th>Terdata</th>
+            <th>Foto KTP</th>
         </tr>
     </thead>
     <tbody>
@@ -28,6 +29,7 @@
                 <td>{{ $penduduk->pekerjaan }}</td>
                 <td>{{ $penduduk->alamat }}</td>
                 <td>{{ date('d/m/Y', strtotime($penduduk->created_at)) }}</td>
+                <td>{{ url('storage/'.$penduduk->image) }}</td>
             </tr>
         @endforeach
     </tbody>

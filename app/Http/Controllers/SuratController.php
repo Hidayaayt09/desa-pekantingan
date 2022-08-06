@@ -6,40 +6,25 @@ use App\Models\Formulir;
 use App\Models\Penduduk;
 use App\Models\Upload;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
-class FormulirController extends Controller
+class SuratController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($tipe)
+    public function index()
     {
         $data = [
-            'title1' => 'Home',
-            'penduduk' => Penduduk::all()
+            'surat' => Formulir::where('nik', Session::get('penduduk')->nik)->get(),
+            'penduduk' => Penduduk::where('id', Session::get('penduduk')->id)->first()
         ];
 
-        switch ($tipe) {
-            case 'sku':
-                $data['title'] = 'Formulir SKU';
-                break;
-            case 'skd':
-                $data['title'] = 'Formulir SKD';
-                break;
-            case 'sktm':
-                $data['title'] = 'Formulir SKTM';
-                break;
+        // dd($data['surat']);
 
-            default:
-                abort(404);
-                break;
-        }
-
-        return view('landing.formulir.surat', $data);
+        return view('surat.index', $data);
     }
 
     /**
@@ -58,7 +43,7 @@ class FormulirController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $tipe)
+    public function store(Request $request)
     {
         $validate = $request->validate([
             'nama' => 'required',
@@ -74,6 +59,7 @@ class FormulirController extends Controller
             'keterangan' => 'required',
         ]);
 
+        $tipe = $request->tipe;
 
         if ($tipe != 'skd') {
             $penduduk = Penduduk::where('nik', $request->nik)->first();
@@ -100,11 +86,12 @@ class FormulirController extends Controller
             'alamat_orangtua' => $request->alamat_orangtua,
             'pekerjaan_orangtua' => $request->pekerjaan_orangtua,
             'umur_orangtua' => $request->umur_orangtua,
-
+            'nama_suami' => $request->nama_suami
         ]);
 
         $form = Formulir::create([
             'tipe' => $tipe,
+            'nik' => $request->nik,
             'keterangan' => $request->keterangan,
             'data' => $data
         ]);
@@ -118,78 +105,50 @@ class FormulirController extends Controller
                 ]);
             }
         }
-
-
-        return back()->with('message', '<div class="alert alert-success">Permintaan berhasil!</div>');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Formulir  $formulir
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function showImage($id)
-    {
-        $images = Upload::where('id_surat', $id)->get();
-
-        return view('surat.image', compact('images'));
-    }
-
     public function show($tipe)
     {
-        $data = [
-            'surat' => Formulir::where('tipe', $tipe)->get()
-        ];
+        switch ($tipe) {
+            case 'sktm':
+                return view("landing.formulir.input.gambar");
+                break;
 
-        return view('surat.show', $data);
+            case 'skm':
+                return view("landing.formulir.input.skm");
+                break;
+
+            default:
+                # code...
+                break;
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Formulir  $formulir
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function cetak($tipe, $id)
+    public function edit($id)
     {
-        $surat = Formulir::findOrFail($id);
-        $penduduk = unserialize($surat->data);
-        $template = new \PhpOffice\PhpWord\TemplateProcessor('./dokumen/' . $tipe . '.docx');
-        $template->setValues([
-            'nama' => $penduduk['nama'],
-            'ttl' => $penduduk['tempat_lahir'] . ', ' . date('d F Y', strtotime($penduduk['tgl_lahir'])),
-            'nik' => $penduduk['nik'],
-            'jk' => $penduduk['jk'],
-            'agama' => $penduduk['agama'],
-            'pekerjaan' => $penduduk['pekerjaan'],
-            'keterangan' => $surat->keterangan,
-            'nohp' => $penduduk['telepon'],
-            'alamat' => $penduduk['alamat'],
-            'tgl' => date('d'),
-            'bln' => date('F'),
-            'thn' => date('Y'),
-            'umur' => $penduduk['umur'],
-            'nama_ortu' => $penduduk['nama_orangtua'],
-            'jk_ortu' => $penduduk['jk_orangtua'],
-            'alamat_ortu' => $penduduk['alamat_orangtua'],
-            'pekerjaan_ortu' => $penduduk['pekerjaan_orangtua'],
-            'umur_ortu' => $penduduk['umur_orangtua'],
-            'nama_suami' => $penduduk['nama_suami'],
-        ]);
-
-        $template->saveAs('arsip/' . $penduduk['nik'] . '_' . strtoupper($penduduk['nama']) . ".docx");
-        return response()->download(public_path('arsip/' . $penduduk['nik'] . '_' . strtoupper($penduduk['nama']) . ".docx"));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Formulir  $formulir
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Formulir $formulir)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -197,23 +156,12 @@ class FormulirController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Formulir  $formulir
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($tipe, $id)
+    public function destroy($id)
     {
-        $penduduk = Formulir::findOrFail($id);
-
-        $uploads = Upload::where('id_surat', $id)->get();
-
-        foreach ($uploads as $upload) {
-            Storage::delete($upload->image);
-            $upload->delete();
-        }
-
-        $penduduk->delete();
-
-        return back()->with('message', '<div class="alert alert-success">Delete berhasil!</div>');
+        //
     }
 
     private function encodePhone($phone)

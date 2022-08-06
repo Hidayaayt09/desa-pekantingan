@@ -45,6 +45,7 @@
                             <a href="{{ url('auth/logout') }}" class="btn btn-sm btn-danger">Logout</a>
                         @else
                             <a href="{{ url('auth') }}" class="btn btn-sm btn-primary">Login</a>
+                            <a href="{{ url('auth/register') }}" class="btn btn-sm btn-success">Daftar</a>
                         @endif
                     </li>
                 </ul>

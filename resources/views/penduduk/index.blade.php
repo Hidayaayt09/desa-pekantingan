@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('app_title', 'Daftar Penduduk')
+@section('app_title', Request::segment(3) == 'baru' ? 'Daftar Penduduk Baru' : 'Daftar Penduduk')
 
 @section('app_contents')
     <section class="section">
@@ -37,20 +37,27 @@
 
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
+            @if (Request::segment(3) != 'baru')
+            {{-- <div class="alert alert-info">
+                <a href="{{ url('admin/penduduk/baru') }}" class="text-white">Terdapat {{ $validasi }} permintaan data penduduk baru, klik disini!</a>
+            </div> --}}
+            @endif
             <div class="x_panel">
                 <div class="x_title">
                     <h2>
                         <i class="fa fa-book"></i> @yield('app_title')
                     </h2>
+                    @if (Request::segment(3) != 'baru')
                     <div class="pull-right">
-                        <a href="{{ url('admin/kependudukan/download') }}" class="btn btn-dark btn-sm">Download
+                        <a href="{{ url('admin/penduduk/tetap/download') }}" class="btn btn-dark btn-sm">Download
                             Data</a>
                         <a href="" class="btn btn-success btn-sm" data-target="#upload-excel"
                             data-toggle="modal">Upload
                             Data</a>
-                        <a href="{{ url('admin/kependudukan/create') }}" class="btn btn-primary btn-sm">Tambah
+                        <a href="{{ url('admin/penduduk/tetap/create') }}" class="btn btn-primary btn-sm">Tambah
                             Penduduk</a>
                     </div>
+                    @endif
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -65,6 +72,11 @@
                                             <th>Nama</th>
                                             <th>Jenis Kelamin</th>
                                             <th>Aksi</th>
+                                            @if (Request::segment(3) == 'baru')
+                                            {{-- <th>
+                                                <input type="checkbox" id="checkAll">
+                                            </th> --}}
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -75,17 +87,32 @@
                                                 <td>{{ $penduduk->nama }}</td>
                                                 <td>{{ $penduduk->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                                 <td>
-                                                    <a href="{{ url('admin/kependudukan/' . $penduduk->id . '/edit') }}"
-                                                        class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                                                    <form action="{{ url('admin/kependudukan/' . $penduduk->id) }}"
+                                                    @if (Request::segment(3) == 'baru')
+                                                    <a href="{{ url('storage/'.$penduduk->image) }}" target="_blank"
+                                                        class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                                                    <form action="{{ url('admin/penduduk/baru/' . $penduduk->id) }}"
                                                         class="d-inline" method="POST">
                                                         @csrf
-                                                        @method('delete')
-                                                        <button class="btn btn-sm btn-danger"><i
-                                                                class="fa fa-trash"></i></button>
-                                                    </form>
-                                                </td>
-                                            </tr>
+                                                        @method('put')
+                                                        <button class="btn btn-sm btn-success"><i
+                                                            class="fa fa-check"></i></button>
+                                                        </form>
+                                                        @else
+                                                        <a href="{{ url('admin/penduduk/tetap/' . $penduduk->id . '/edit') }}"
+                                                            class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
+                                                            <form action="{{ url('admin/penduduk/tetap/' . $penduduk->id) }}"
+                                                                class="d-inline" method="POST">
+                                                                @csrf
+                                                                @method('delete')
+                                                                <button class="btn btn-sm btn-danger"><i
+                                                                    class="fa fa-trash"></i></button>
+                                                                </form>
+                                                                @endif
+                                                            </td>
+                                                            {{-- <td>
+                                                                <input type="checkbox" name="check[]" id="check">
+                                                            </td> --}}
+                                                        </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -109,7 +136,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('admin/kependudukan/upload') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin/penduduk/tetap/upload') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -130,4 +157,27 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('app_scripts')
+<script>
+    $(function () {
+        $("#checkAll").on('click', function () {
+            let check = $('input[name="check[]"]');
+            if (this.checked) {
+                for (var i = 0; i < check.length; i++) {
+                    if (check[i].type == 'checkbox' ) {
+                        check[i].checked = true;
+                    }
+                }
+            } else {
+                for (var i = 0; i < check.length; i++) {
+                    if (check[i].type == 'checkbox') {
+                        check[i].checked = false;
+                    }
+                }
+            }
+        })
+    })
+</script>
 @endsection

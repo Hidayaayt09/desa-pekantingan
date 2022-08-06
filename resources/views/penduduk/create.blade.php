@@ -10,7 +10,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('admin/dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ url('admin/kependudukan') }}">Daftar Penduduk</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('admin/penduduk/tetap') }}">Daftar Penduduk</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@yield('app_title')</li>
             </ol>
         </nav>
@@ -48,11 +48,11 @@
                     <h2>
                         <i class="fa fa-book"></i> @yield('app_title')
                     </h2>
-                    <a href="{{ url('admin/kependudukan') }}" class="btn btn-warning btn-sm pull-right">Kembali</a>
+                    <a href="{{ url('admin/penduduk/tetap') }}" class="btn btn-warning btn-sm pull-right">Kembali</a>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <form action="{{ url('admin/kependudukan') }}" method="post">
+                    <form action="{{ url('admin/penduduk/tetap') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label for="nama" class="col-sm-2 col-form-label">Nama Lengkap</label>
@@ -138,6 +138,13 @@
                             <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
                             <div class="col-sm-10">
                                 <textarea name="alamat" id="alamat" class="form-control" rows="3">{{ old('alamat') }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="image" class="col-sm-2 col-form-label">Foto KTP</label>
+                            <div class="col-sm-10">
+                                <input name="image" id="image" value="{{ old('image') }}"
+                                    class="form-control" type="file">
                             </div>
                         </div>
                         <div class="form-group row">
