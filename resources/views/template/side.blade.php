@@ -74,6 +74,21 @@
                                     SKTM
                                 </a>
                             </li>
+                            <li class="">
+                                <a href="{{ url('admin/surat/skm') }}">
+                                    SKM
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ url('admin/surat/sknn') }}">
+                                    SKNN
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ url('admin/surat/lkp') }}">
+                                    LKP
+                                </a>
+                            </li>
                         </ul>
                     </li>
 
@@ -123,7 +138,7 @@
         <!-- /menu footer buttons -->
         <div class="sidebar-footer hidden-small">
             <a data-toggle="tooltip" data-placement="top" title="Logout" style="width: 100%"
-                href="{{ Session::get('penduduk') ? url('logout') : url('auth/logout') }}">
+                href="{{ Session::get('penduduk') ? url('penduduk/logout') : url('auth/logout') }}">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
         </div>

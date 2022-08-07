@@ -89,6 +89,8 @@ Route::prefix('penduduk')->group(function () {
     Route::get('formulir', [SuratController::class, 'index']);
     Route::get('formulir/{tipe}', [SuratController::class, 'show']);
     Route::post('formulir', [SuratController::class, 'store']);
+
+    Route::post('vaksin', [VaksinController::class, 'store']);
 });
 
 Route::middleware(['autentikasi'])->group(function () {

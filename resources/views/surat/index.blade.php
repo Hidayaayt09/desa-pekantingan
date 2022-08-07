@@ -82,6 +82,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                @if ($vaksin)
                 <form action="{{ url('penduduk/formulir') }}" method="post">
                     @csrf
                     <div class="modal-body">
@@ -180,6 +181,30 @@
                         <button class="btn btn-sm btn-primary">Simpan</button>
                     </div>
                 </form>
+                @else
+                <div class="alert alert-danger">Harap isi data vaksin terlebih dahulu</div>
+                <form action="{{ url('penduduk/vaksin/') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="penduduk" value="{{ $penduduk->id }}">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="dosis">Pilih Dosis</label>
+                            <select class="form-control" name="dosis" id="dosis">
+                                <option value="">Pilih Dosis</option>
+                                <option value="Vaksin 1 (Sinovac)">Vaksin 1 (Sinovac)</option>
+                                <option value="Vaksin 2 (Sinovac)">Vaksin 2 (Sinovac)</option>
+                                <option value="Vaksin 3 (Booster)">Vaksin 3 (Booster)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger btn-sm" data-dismiss="modal">
+                            <i class="fa fa-times"></i> Kembali
+                        </button>
+                        <button class="btn btn-sm btn-primary">Tambah</button>
+                    </div>
+                </form>
+                @endif
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Formulir;
 use App\Models\Penduduk;
 use App\Models\Upload;
+use App\Models\Vaksin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -19,7 +20,8 @@ class SuratController extends Controller
     {
         $data = [
             'surat' => Formulir::where('nik', Session::get('penduduk')->nik)->get(),
-            'penduduk' => Penduduk::where('id', Session::get('penduduk')->id)->first()
+            'penduduk' => Penduduk::where('id', Session::get('penduduk')->id)->first(),
+            'vaksin' => Vaksin::where('id_penduduk', Session::get('penduduk')->id)->first()
         ];
 
         // dd($data['surat']);
@@ -105,6 +107,8 @@ class SuratController extends Controller
                 ]);
             }
         }
+
+        return back()->with('message', '<div class="alert alert-success">Surat berhasil diajukan!</div>');
     }
 
     /**
