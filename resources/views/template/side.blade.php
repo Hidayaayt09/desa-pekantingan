@@ -16,7 +16,7 @@
             </div> --}}
             <div class="profile_info">
                 <span>Selamat Datang,</span>
-                <h2>{{ $user->name }}</h2>
+                <h2>{{ Session::get('penduduk') ? $user->nama : $user->name }}</h2>
             </div>
         </div>
         <!-- /menu profile quick info -->

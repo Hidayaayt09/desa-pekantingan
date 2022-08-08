@@ -25,7 +25,7 @@ class LoginController extends Controller
     public function proccess(Request $request)
     {
         $validate = $request->validate([
-            'nik' => 'required|min:16|max:16'
+            'nik' => 'required|max:16'
         ]);
 
         $penduduk = Penduduk::where('nik', $validate['nik'])->first();

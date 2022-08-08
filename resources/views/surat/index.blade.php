@@ -183,7 +183,7 @@
                 </form>
                 @else
                 <div class="alert alert-danger">Harap isi data vaksin terlebih dahulu</div>
-                <form action="{{ url('penduduk/vaksin/') }}" method="POST">
+                <form action="{{ url('penduduk/vaksin/') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="penduduk" value="{{ $penduduk->id }}">
                     <div class="modal-body">
@@ -195,6 +195,10 @@
                                 <option value="Vaksin 2 (Sinovac)">Vaksin 2 (Sinovac)</option>
                                 <option value="Vaksin 3 (Booster)">Vaksin 3 (Booster)</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sertifikat">Sertifikat Vaksin</label>
+                            <input type="file" class="form-control" name="sertifikat">
                         </div>
                     </div>
                     <div class="modal-footer">

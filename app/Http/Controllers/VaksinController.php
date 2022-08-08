@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Penduduk;
 use App\Models\Vaksin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class VaksinController extends Controller
 {
@@ -46,10 +47,16 @@ class VaksinController extends Controller
             'dosis' => "required",
         ]);
 
+        if ($request->file('sertifikat')) {
+            $validate['sertifikat'] = $request->file('sertifikat')->store('sertifikat');
+        }
+
         Vaksin::create([
             'id_penduduk' => $request->penduduk,
-            'jenis_vaksin' => $request->dosis
+            'jenis_vaksin' => $request->dosis,
+            'sertifikat' => $validate['sertifikat']
         ]);
+
 
         return back()->with('message', '<div class="alert alert-success">Tambah berhasil!</div>');
     }
@@ -90,14 +97,20 @@ class VaksinController extends Controller
      */
     public function update(Request $request, Vaksin $vaksin)
     {
-        $request->validate([
+        $validate = $request->validate([
             'penduduk' => "required",
             'dosis' => "required",
         ]);
 
+        if ($request->file('sertifikat')) {
+            Storage::delete($vaksin->sertifikat);
+            $validate['sertifikat'] = $request->file('sertifikat')->store('sertifikat');
+        }
+
         $vaksin->update([
             'id_penduduk' => $request->penduduk,
-            'jenis_vaksin' => $request->dosis
+            'jenis_vaksin' => $request->dosis,
+            'sertifikat' => $validate['sertifikat']
         ]);
 
         return back()->with('message', '<div class="alert alert-success">Update berhasil!</div>');
@@ -111,7 +124,15 @@ class VaksinController extends Controller
      */
     public function destroy(Vaksin $vaksin)
     {
+        Storage::delete($vaksin->sertifikat);
         $vaksin->delete();
         return back()->with('message', '<div class="alert alert-success">Hapus berhasil!</div>');
+    }
+
+    public function showImage($id)
+    {
+        $images = Vaksin::where('id', $id)->first();
+
+        return view('vaksin.image', compact('images'));
     }
 }

@@ -1,11 +1,11 @@
 {{-- Kerangka Admin(Template Admin) --}}
 @php
 if (Session::get('penduduk')) {
-    $user = \App\Models\User::where('id', Session::get('penduduk')->id)->first();
+    $user = \App\Models\Penduduk::where('id', Session::get('penduduk')->id)->first();
 } else {
     $user = \App\Models\User::where('id', auth()->user()->id)->first();
 }
-
+// dd($user);
 @endphp
 <!DOCTYPE html>
 <html lang="en">

@@ -76,6 +76,10 @@
                                                 <td>{{ $vaksin->penduduk->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                                 <td>{{ $vaksin->jenis_vaksin }}</td>
                                                 <td>
+                                                    <button onclick="showGambar({{ $vaksin->id }})"
+                                                        class="btn btn-sm btn-info"
+                                                        data-target="#modal-show-image" data-toggle="modal"><i
+                                                            class="fa fa-eye"></i></button>
                                                     <a href="" data-target="#edit-data" data-toggle="modal"
                                                         class="btn btn-sm btn-warning"
                                                         onclick="showModalEdit({{ $vaksin->id }})"><i
@@ -112,7 +116,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('admin/vaksin') }}" method="POST">
+                <form action="{{ url('admin/vaksin') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -133,6 +137,10 @@
                                 <option value="Vaksin 2 (Sinovac)">Vaksin 2 (Sinovac)</option>
                                 <option value="Vaksin 3 (Booster)">Vaksin 3 (Booster)</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sertifikat">Sertifikat Vaksin</label>
+                            <input type="file" class="form-control" name="sertifikat">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -162,6 +170,31 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true"
+        id="modal-show-image">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa fa-plus"></i>
+                        <span>Lihat Data</span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="show-image"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger btn-sm" data-dismiss="modal">
+                        <i class="fa fa-times"></i> Kembali
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('app_scripts')
@@ -170,6 +203,14 @@
         function showModalEdit(params) {
             $.get('{{ url('admin/vaksin') }}/' + params + '/edit', function(response) {
                 $("#data").html(response);
+            })
+        }
+
+        $("#show-image").empty()
+
+        function showGambar(params) {
+            $.get('{{ url('api/v1/sertifikat/image') }}/' + params).then((response) => {
+                $("#show-image").html(response)
             })
         }
 

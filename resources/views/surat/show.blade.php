@@ -93,7 +93,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title">
                         <i class="fa fa-plus"></i>
-                        <span>Tambah Data</span>
+                        <span>Lihat Data</span>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -117,7 +117,7 @@
         $("#show-image").empty()
 
         function showGambar(params) {
-            $.get('{{ url('api/v1/image') }}/' + params).then((response) => {
+            $.get('{{ url('api/v1/formulir/image') }}/' + params).then((response) => {
                 $("#show-image").html(response)
             })
         }

@@ -1,4 +1,4 @@
-<form action="{{ url('admin/vaksin/' . $vaksin->id) }}" method="POST">
+<form action="{{ url('admin/vaksin/' . $vaksin->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('put')
     <div class="modal-body">
@@ -24,6 +24,13 @@
                 <option value="Vaksin 3 (Booster)"
                     {{ 'Vaksin 3 (Booster)' == $vaksin->jenis_vaksin ? 'selected' : '' }}>Vaksin 3 (Booster)</option>
             </select>
+        </div>
+        <div class="form-group">
+            <img src="{{ url('storage/'.$vaksin->sertifikat) }}" width="100%">
+        </div>
+        <div class="form-group">
+            <label for="sertifikat">Sertifikat Vaksin</label>
+            <input type="file" class="form-control" name="sertifikat">
         </div>
     </div>
     <div class="modal-footer">

@@ -169,7 +169,7 @@ class FormulirController extends Controller
             'tgl' => date('d'),
             'bln' => date('F'),
             'thn' => date('Y'),
-            'kewarganegaraan' => $penduduk['kewarganegaraan'],
+            'kewarganegaraan' => $penduduk['wn'],
             'status' => "Menikah",
             'umur' => $penduduk['umur'],
             'nama_ortu' => $penduduk['nama_orangtua'],

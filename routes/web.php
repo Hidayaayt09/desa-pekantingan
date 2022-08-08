@@ -13,6 +13,7 @@ use App\Http\Controllers\PendudukController;
 use App\Http\Controllers\SuratController;
 use App\Http\Controllers\VaksinController;
 use App\Models\Penduduk;
+use App\Models\Vaksin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
@@ -95,7 +96,8 @@ Route::prefix('penduduk')->group(function () {
 
 Route::middleware(['autentikasi'])->group(function () {
     Route::prefix('api/v1/')->group(function () {
-        Route::get('image/{id}', [FormulirController::class, 'showImage']);
+        Route::get('/formulir/image/{id}', [FormulirController::class, 'showImage']);
+        Route::get('/sertifikat/image/{id}', [VaksinController::class, 'showImage']);
     });
 
     Route::get('auth/logout', [LoginController::class, 'logout']);
@@ -113,11 +115,11 @@ Route::middleware(['autentikasi'])->group(function () {
 
         Route::resource('vaksin', VaksinController::class);
 
+        Route::resource('penduduk/tetap', PendudukController::class);
         Route::post('penduduk/tetap/upload', [PendudukController::class, 'import']);
         Route::get('penduduk/tetap/download', [PendudukController::class, 'export']);
         Route::get('penduduk/baru', [PendudukController::class, 'view']);
         Route::put('penduduk/baru/{id}', [PendudukController::class, 'validasi']);
         Route::get('penduduk/tetap/{id}', [PendudukController::class, 'edit']);
-        Route::resource('penduduk/tetap', PendudukController::class);
     });
 });
