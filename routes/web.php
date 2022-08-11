@@ -5,6 +5,7 @@ use App\Http\Controllers\AppController;
 use App\Http\Controllers\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\CaptchaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataVaksinController;
 use App\Http\Controllers\FormulirController;
@@ -33,6 +34,8 @@ use Illuminate\Support\Facades\Session;
 // });
 
 Route::get('/', [AppController::class, 'index']);
+
+Route::get('/reload/captcha', CaptchaController::class);
 
 Route::middleware(['guest'])->group(function () {
     Route::get('auth', [AuthLoginController::class, 'index']);

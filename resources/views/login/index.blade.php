@@ -51,6 +51,13 @@
                             <i class="ti-lock"></i>
                             <div class="text-danger"></div>
                         </div>
+                        <div class="form-gp">
+                            <label for="exampleInputPassword1">Captcha</label>
+                            <input name="captcha" id="exampleInputPassword1" value="{{ old('captcha') }}"
+                                type="text">
+                            <div class="mt-3">{!! captcha_img() !!}</div>
+                            <div class="text-danger"></div>
+                        </div>
                         <div class="row mb-4 rmber-area">
                             <div class="col-6">
                                 <div class="custom-control custom-checkbox mr-sm-2">
