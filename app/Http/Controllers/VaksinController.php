@@ -45,6 +45,7 @@ class VaksinController extends Controller
         $request->validate([
             'penduduk' => "required",
             'dosis' => "required",
+            'sertifikat' => 'required|image|mimes:png,jpg,jpeg,gif'
         ]);
 
         if ($request->file('sertifikat')) {
