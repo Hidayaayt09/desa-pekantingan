@@ -31,6 +31,13 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-5">
+                            <input name="password" id="password" class="form-control"
+                                type="password">
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="captcha" class="col-sm-2 col-form-label">Captcha</label>
                         <div class="col-sm-5">
                             <div class="mb-3">{!! captcha_img() !!}</div>

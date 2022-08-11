@@ -26,14 +26,19 @@ class LoginController extends Controller
     {
         $validate = $request->validate([
             'nik' => 'required|max:16',
+            'password' => 'required',
             'captcha' => 'required|captcha'
         ]);
 
         $penduduk = Penduduk::where('nik', $validate['nik'])->first();
 
         if ($penduduk) {
-            Session::put('penduduk', $penduduk);
-            return redirect('penduduk');
+            if (password_verify($validate['password'], $penduduk->password)) {
+                Session::put('penduduk', $penduduk);
+                return redirect('penduduk');
+            } else {
+                return back()->with('message', '<div class="alert alert-danger">Password anda salah!</div>');
+            }
         } else {
             return back()->with('message', '<div class="alert alert-danger">Anda belum terdaftar!</div>');
         }

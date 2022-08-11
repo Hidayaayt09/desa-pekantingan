@@ -34,6 +34,7 @@ class RegisterController extends Controller
             'tgl_lahir' => 'required',
             'pekerjaan' => 'required',
             'alamat' => 'required',
+            'password' => 'required',
             'image' => 'image|required|mimes:png,jpg,jpeg,gif'
         ]);
 
@@ -44,6 +45,7 @@ class RegisterController extends Controller
         } else {
             $validate['kewarganegaraan'] = $validate['wn'];
             $validate['status'] = 0;
+            $validate['password'] = bcrypt($validate['password']);
 
             if ($request->file('image')) {
                 $validate['image'] = $request->file('image')->store('penduduk');
