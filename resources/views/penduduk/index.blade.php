@@ -38,7 +38,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             @if (Request::segment(3) != 'baru')
-            {{-- <div class="alert alert-info">
+                {{-- <div class="alert alert-info">
                 <a href="{{ url('admin/penduduk/baru') }}" class="text-white">Terdapat {{ $validasi }} permintaan data penduduk baru, klik disini!</a>
             </div> --}}
             @endif
@@ -48,15 +48,15 @@
                         <i class="fa fa-book"></i> @yield('app_title')
                     </h2>
                     @if (Request::segment(3) != 'baru')
-                    <div class="pull-right">
-                        <a href="{{ url('admin/penduduk/tetap/download') }}" class="btn btn-dark btn-sm">Download
-                            Data</a>
-                        <a href="" class="btn btn-success btn-sm" data-target="#upload-excel"
-                            data-toggle="modal">Upload
-                            Data</a>
-                        <a href="{{ url('admin/penduduk/tetap/create') }}" class="btn btn-primary btn-sm">Tambah
-                            Penduduk</a>
-                    </div>
+                        <div class="pull-right">
+                            <a href="{{ url('admin/penduduk/tetap/download') }}" class="btn btn-dark btn-sm">Download
+                                Data</a>
+                            <a href="" class="btn btn-success btn-sm" data-target="#upload-excel"
+                                data-toggle="modal">Upload
+                                Data</a>
+                            <a href="{{ url('admin/penduduk/tetap/create') }}" class="btn btn-primary btn-sm">Tambah
+                                Penduduk</a>
+                        </div>
                     @endif
                     <div class="clearfix"></div>
                 </div>
@@ -73,7 +73,7 @@
                                             <th>Jenis Kelamin</th>
                                             <th>Aksi</th>
                                             @if (Request::segment(3) == 'baru')
-                                            {{-- <th>
+                                                {{-- <th>
                                                 <input type="checkbox" id="checkAll">
                                             </th> --}}
                                             @endif
@@ -88,31 +88,31 @@
                                                 <td>{{ $penduduk->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                                 <td>
                                                     @if (Request::segment(3) == 'baru')
-                                                    <a href="{{ url('storage/'.$penduduk->image) }}" target="_blank"
-                                                        class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
-                                                    <form action="{{ url('admin/penduduk/baru/' . $penduduk->id) }}"
-                                                        class="d-inline" method="POST">
-                                                        @csrf
-                                                        @method('put')
-                                                        <button class="btn btn-sm btn-success"><i
-                                                            class="fa fa-check"></i></button>
+                                                        <a href="{{ url('storage/' . $penduduk->image) }}" target="_blank"
+                                                            class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                                                        <form action="{{ url('admin/penduduk/baru/' . $penduduk->id) }}"
+                                                            class="d-inline" method="POST">
+                                                            @csrf
+                                                            @method('put')
+                                                            <button class="btn btn-sm btn-success"><i
+                                                                    class="fa fa-check"></i></button>
                                                         </form>
-                                                        @else
+                                                    @else
                                                         <a href="{{ url('admin/penduduk/tetap/' . $penduduk->id . '/edit') }}"
                                                             class="btn btn-sm btn-warning"><i class="fa fa-edit"></i></a>
-                                                            <form action="{{ url('admin/penduduk/tetap/' . $penduduk->id) }}"
-                                                                class="d-inline" method="POST">
-                                                                @csrf
-                                                                @method('delete')
-                                                                <button class="btn btn-sm btn-danger"><i
+                                                        <a href="" class="btn btn-success btn-sm" id="resetPassword"
+                                                            data-id="{{ $penduduk->id }}" data-target="#reset-password"
+                                                            data-toggle="modal"><i class="fa fa-key"></i></a>
+                                                        <form action="{{ url('admin/penduduk/tetap/' . $penduduk->id) }}"
+                                                            class="d-inline" method="POST">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button class="btn btn-sm btn-danger"><i
                                                                     class="fa fa-trash"></i></button>
-                                                                </form>
-                                                                @endif
-                                                            </td>
-                                                            {{-- <td>
-                                                                <input type="checkbox" name="check[]" id="check">
-                                                            </td> --}}
-                                                        </tr>
+                                                        </form>
+                                                    @endif
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -157,27 +157,64 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="reset-password">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fa fa-plus"></i>
+                        <span>Reset Password</span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" method="POST">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-danger btn-sm" data-dismiss="modal">
+                            <i class="fa fa-times"></i> Kembali
+                        </button>
+                        <button class="btn btn-sm btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('app_scripts')
-<script>
-    $(function () {
-        $("#checkAll").on('click', function () {
-            let check = $('input[name="check[]"]');
-            if (this.checked) {
-                for (var i = 0; i < check.length; i++) {
-                    if (check[i].type == 'checkbox' ) {
-                        check[i].checked = true;
+    <script>
+        $(function() {
+            $("#checkAll").on('click', function() {
+                let check = $('input[name="check[]"]');
+                if (this.checked) {
+                    for (var i = 0; i < check.length; i++) {
+                        if (check[i].type == 'checkbox') {
+                            check[i].checked = true;
+                        }
+                    }
+                } else {
+                    for (var i = 0; i < check.length; i++) {
+                        if (check[i].type == 'checkbox') {
+                            check[i].checked = false;
+                        }
                     }
                 }
-            } else {
-                for (var i = 0; i < check.length; i++) {
-                    if (check[i].type == 'checkbox') {
-                        check[i].checked = false;
-                    }
-                }
-            }
+            })
+
+            $("body").on('click', '#resetPassword', function() {
+                let id = $(this).data('id');
+                let form = $("#reset-password form");
+                form[0].action = "{{ url('admin/penduduk/reset/') }}/" + id;
+            })
         })
-    })
-</script>
+    </script>
 @endsection

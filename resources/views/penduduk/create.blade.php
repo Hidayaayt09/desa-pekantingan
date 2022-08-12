@@ -143,8 +143,14 @@
                         <div class="form-group row">
                             <label for="image" class="col-sm-2 col-form-label">Foto KTP</label>
                             <div class="col-sm-10">
-                                <input name="image" id="image" value="{{ old('image') }}"
-                                    class="form-control" type="file">
+                                <input name="image" id="image" value="{{ old('image') }}" class="form-control"
+                                    type="file">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-2 col-form-label">Password</label>
+                            <div class="col-sm-10">
+                                <input name="password" id="password" class="form-control" type="password">
                             </div>
                         </div>
                         <div class="form-group row">

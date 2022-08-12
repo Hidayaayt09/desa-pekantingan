@@ -155,6 +155,23 @@ class FormulirController extends Controller
     {
         $surat = Formulir::findOrFail($id);
         $penduduk = unserialize($surat->data);
+
+        if (empty($penduduk['nama_suami'])) {
+            $penduduk['nama_suami'] = "";
+        }
+
+        if (empty($penduduk['umur'])) {
+            $penduduk['umur'] = "";
+        }
+
+        if (empty($penduduk['nama_orangtua'])) {
+            $penduduk['nama_orangtua'] = "";
+            $penduduk['jk_orangtua'] = "";
+            $penduduk['alamat_orangtua'] = "";
+            $penduduk['pekerjaan_orangtua'] = "";
+            $penduduk['umur_orangtua'] = "";
+        }
+
         $template = new \PhpOffice\PhpWord\TemplateProcessor('./dokumen/' . $tipe . '.docx');
         $template->setValues([
             'nama' => $penduduk['nama'],

@@ -62,6 +62,7 @@ class PendudukController extends Controller
             'tgl_lahir' => 'required',
             'pekerjaan' => 'required',
             'alamat' => 'required',
+            'password' => 'required',
             'image' => 'image|required|mimes:png,jpg,jpeg,gif'
         ]);
 
@@ -72,6 +73,7 @@ class PendudukController extends Controller
         } else {
             $validate['kewarganegaraan'] = $validate['wn'];
             $validate['status'] = 1;
+            $validate['password'] = bcrypt($validate['password']);
 
             if ($request->file('image')) {
                 $validate['image'] = $request->file('image')->store('penduduk');
@@ -107,6 +109,20 @@ class PendudukController extends Controller
         ];
 
         return view('penduduk.edit', $data);
+    }
+
+    public function reset(Request $request, $id)
+    {
+        $request->validate([
+            'password' => 'required'
+        ]);
+
+        $penduduk = Penduduk::findOrFail($id);
+
+        $penduduk->password = bcrypt($request->password);
+        $penduduk->save();
+
+        return redirect('admin/penduduk/tetap')->with('message', '<div class="alert alert-success">Reset password berhasil!</div>');
     }
 
     /**

@@ -118,6 +118,7 @@ Route::middleware(['autentikasi'])->group(function () {
 
         Route::resource('vaksin', VaksinController::class);
 
+        Route::post('penduduk/reset/{id}', [PendudukController::class, 'reset']);
         Route::resource('penduduk/tetap', PendudukController::class);
         Route::post('penduduk/tetap/upload', [PendudukController::class, 'import']);
         Route::get('penduduk/tetap/download', [PendudukController::class, 'export']);
