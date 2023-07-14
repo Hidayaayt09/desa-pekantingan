@@ -104,6 +104,7 @@
                                     <option value="sknn">Surat Keterangan Numpang Nikah</option>
                                     <option value="sktm">Surat Keterangan Tidak Mampu</option>
                                     <option value="sku">Surat Keterangan Usaha</option>
+                                    <option value="sku">Surat Pengantar SKCK</option>
                                 </select>
                             </div>
                         </div>

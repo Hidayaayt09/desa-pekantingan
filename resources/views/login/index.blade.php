@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Login - Admin Desa Krimun</title>
+    <title>Login - Admin Desa Pekantingan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/png" href="{{ url('login/images/Indramayu.png') }}">
     <link rel="stylesheet" href="{{ url('login') }}/css/bootstrap.min.css">

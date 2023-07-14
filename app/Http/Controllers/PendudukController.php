@@ -53,7 +53,7 @@ class PendudukController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'nama' => 'required',
+            'name' => 'required',
             'nik' => 'required|unique:tb_penduduk,nik',
             'jk' => 'required',
             'wn' => 'required',
@@ -135,7 +135,7 @@ class PendudukController extends Controller
     public function update(Request $request, $id)
     {
         $validate = $request->validate([
-            'nama' => 'required',
+            'name' => 'required',
             'nik' => 'required',
             'jk' => 'required',
             'kewarganegaraan' => 'required',

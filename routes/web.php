@@ -40,7 +40,7 @@ Route::get('/reload/captcha', CaptchaController::class);
 Route::middleware(['guest'])->group(function () {
     Route::get('auth', [AuthLoginController::class, 'index']);
     Route::post('auth', [AuthLoginController::class, 'proccess']);
-    Route::get('auth/register', [RegisterController::class, 'index']);
+    Route::get('auth/register', [RegisterController::class, 'index'])->name('auth.register');
     Route::post('auth/register', [RegisterController::class, 'proccess']);
     Route::get('siteman/login', [LoginController::class, 'login']);
     Route::post('siteman/login', [LoginController::class, 'proses']);

@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Website Desa Krimun</title>
-    <link rel="shortcut icon" type="image/png" href="{{ url('login/images/Indramayu.png') }}">
+    <title>Website Desa Pekantingan</title>
+    <link rel="shortcut icon" type="image/png" href="{{ url('login/images/cerbon.png') }}">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,9 +24,9 @@
         <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
             <div class="container">
                 <a href="" class="navbar-brand">
-                    <img src="{{ url('login/images/Indramayu.png') }}" alt="Logo Indramayu"
+                    <img src="{{ url('login/images/cerbon.png') }}" alt="Logo cerbon"
                         class="brand-image img-circle elevation-3" style="opacity: .8">
-                    <span class="brand-text font-weight-light"><b>Desa Krimun</b></span>
+                    <span class="brand-text font-weight-light"><b>Desa Pekantingan</b></span>
                 </a>
 
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse"
@@ -40,14 +40,65 @@
                 <!-- Right navbar links -->
                 <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                     <!-- Messages Dropdown Menu -->
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
+                        @auth
                         @if (Auth::user())
                             <a href="{{ url('auth/logout') }}" class="btn btn-sm btn-danger">Logout</a>
                         @else
                             <a href="{{ url('auth') }}" class="btn btn-sm btn-primary">Login</a>
                             <a href="{{ url('auth/register') }}" class="btn btn-sm btn-success">Daftar</a>
                         @endif
-                    </li>
+                        @endauth
+                    </li> --}}
+
+                
+                      
+                 
+                    @if (Session::get('penduduk'))
+                    <div class=" lg:flex lg:items-center lg:w-auto w-full" id="menu">
+                        <div class="btn btn-sm btn-success">hallo, {{ $user->nama ?? '' }}
+                        </div>
+                        <a href="{{url('auth')}}" class="btn btn-sm btn-primary">Dashboard</a>
+    
+                        <a href="{{ url('penduduk/logout') }}" class="btn btn-sm btn-danger">Logout</a>
+                         </div>
+                  
+                    @else
+                    
+                    <div class=" lg:flex lg:items-center lg:w-auto w-full" id="menu">
+                        <a href="{{ url('auth') }}" class="btn btn-sm btn-primary">Login</a>
+                        <a href="{{ url('auth/register') }}" class="btn btn-sm btn-success">Daftar</a>
+                       
+                    </div>
+
+                    
+                    @endif
+                    
+                   
+                    
+                    {{-- @auth
+                        @if (Auth::user())
+                        <hr class="block lg:hidden">
+                        <a href="{{url('auth')}}" class="block lg:hidden nav-link text-serv-text">
+                            Dashboard</a>
+    
+                        <a href="{{url('auth/logout')}}" class="block lg:hidden nav-link text-serv-text" onclick="event.preventDefault();document.getElementById('logout-form').submit();">Logout
+                         <form action="{{ url('auth/logout') }}" id="logout-form" method="POST" style="display: none;"> 
+                            @csrf
+                         </form>
+                        
+                        </a>
+                        @else
+                        <div class="hidden lg:flex lg:items-center lg:w-auto w-full" id="menu">
+                            <a href="{{ url('auth') }}" class="btn btn-sm btn-primary">Login</a>
+                            <a href="{{ url('auth/register') }}" class="btn btn-sm btn-success">Daftar</a>
+                            @csrf
+                        </div>
+                        @endif
+                    @endauth
+                    --}}
+                    
+                
                 </ul>
             </div>
         </nav>
@@ -118,7 +169,7 @@
                 Anything you want
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2022 Website Desa Krimun</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; 2023 Website Desa Pekantingan</a>.</strong> All rights reserved.
         </footer>
     </div>
     <!-- ./wrapper -->

@@ -1,7 +1,7 @@
 <!-- footer content -->
 <footer>
     <div class="pull-right">
-        Website Desa Krimun
+        Website Desa Pekantingan
     </div>
     <div class="clearfix"></div>
 </footer>

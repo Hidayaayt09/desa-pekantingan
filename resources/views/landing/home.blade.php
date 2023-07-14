@@ -4,9 +4,9 @@
     <div class="col-lg-9">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title text-bold">Sejarah Desa Krimun</h5>
+                <h5 class="card-title text-bold">Sejarah Desa Pekantingan</h5>
                 <p class="card-text">
-                    <img src="{{ url('login/images/Indramayu.png') }}" width="300" alt="" style="float: left">
+                    <img src="{{ url('login/images/cerbon.png') }}" width="300" alt="" style="float: left">
                 <div align="justify">
                     Krimun berasal dari tentara prajurit Mataram yang berkerumun ditempat ini sambil
                     memakai sarung setelah sembahyang yaitu prajurit Mataram yang kalah perang

@@ -2,9 +2,9 @@
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
             <a href="javascript:void(0)" class="site_title">
-                <img src="{{ url('login/images/Indramayu.png') }}" width="50">
+                <img src="{{ url('login/images/cerbon.png') }}" width="50">
                 <span>
-                    Desa Krimun
+                    Pekantingan
                 </span>
             </a>
         </div>
@@ -40,6 +40,11 @@
                         </a>
                     </li>
                     <li class="">
+                        <a href="{{ url('/') }}">
+                            <i class="fa fa-home"></i>Halaman Landing
+                        </a>
+                    </li>
+                    <li class="">
                         <a href="{{ url('penduduk/profil') }}">
                             <i class="fa fa-user"></i>Profil
                         </a>
@@ -53,9 +58,14 @@
                         </a>
                     </li>
 
+                    <li class="">
+                        <a href="{{ url('/') }}">
+                            <i class="fa fa-home"></i>Halaman Landing
+                        </a>
+                    </li>
                     <li>
                         <a>
-                            <i class="fa fa-envelope"></i> Surat Masuk
+                            <i class="fa fa-envelope"></i> Surat Keterangan
                             <span class="fa fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
@@ -84,14 +94,31 @@
                                     SKNN
                                 </a>
                             </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a>
+                            <i class="fa fa-envelope"></i> Surat Pengantar
+                            <span class="fa fa-chevron-down"></span>
+                        </a>
+                        <ul class="nav child_menu">
                             <li class="">
                                 <a href="{{ url('admin/surat/lkp') }}">
                                     LKP
                                 </a>
                             </li>
+                            <li class="">
+                                <a href="{{ url('admin/surat/lkp') }}">
+                                    Surat Pengantar SKCK
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="{{ url('admin/surat/lkp') }}">
+                                    Surat Pengantar Kunjungan
+                                </a>
+                            </li>
                         </ul>
                     </li>
-
                     <li class="">
                         <a href="{{ url('admin/berita') }}">
                             <i class="fa fa-newspaper-o"></i>Berita
@@ -111,7 +138,7 @@
                             </li>
                             <li class="">
                                 <a href="{{ url('admin/penduduk/baru') }}">
-                                    Penduduk Baru
+                                    Verifikasi Penduduk Baru
                                 </a>
                             </li>
                         </ul>
