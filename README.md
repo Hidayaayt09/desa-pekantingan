@@ -1,9 +1,9 @@
 ## Cara Installasi
 
 - **Buka Git Bash**
-- **Download Repository Ta Desa Pekantingan**
+- **Download Repository Desa Pekantingan**
 ```
-git clone https://github.com/hakim-asrori/Ta-Desa-Krimun.git
+git clone https://github.com/hakim-asrori/desa-pekantingan.git
 ```
 - **Masuk directory desa-pekantingan**
 ```
