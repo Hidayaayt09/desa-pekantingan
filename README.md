@@ -1,11 +1,11 @@
 ## Cara Installasi
 
 - **Buka Git Bash**
-- **Download Repository Ta Desa Krimun**
+- **Download Repository Ta Desa Pekantingan**
 ```
 git clone https://github.com/hakim-asrori/Ta-Desa-Krimun.git
 ```
-- **Masuk directory Ta-Desa-Krimun**
+- **Masuk directory desa-pekantingan**
 ```
 cd Ta-Desa-Krimun
 ```
